@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Centered Grid with Delayed Wrapper Scaling</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        width: 100vw;
+        background-color: #fcfcfc;
+        transition: background-color 0.4s ease-in-out;
+      }
+
+      .video-focus {
+        background-color: black;
+      }
+
+      /* The outer wrapper responsible for scaling */
+      .outerWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.5s ease-in-out;
+        transform-origin: center;
+      }
+
+      /* The grid wrapper responsible for the grid structure */
+      .wrapper {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(7, 1fr);
+        gap: 30px;
+        position: relative;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .box {
+        width: 40px;
+        height: 25px;
+        /* background-color: black; */
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s, opacity 0.3s;
+        padding: 0.05rem;
+        box-sizing: border-box;
+      }
+
+      .box.active {
+        background-color: white;
+        z-index: 10; /* Ensure the active box appears above the others */
+      }
+
+      header {
+        font-family: helvetica;
+        text-transform: uppercase;
+        position: fixed;
+        top: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      footer {
+        font-family: helvetica;
+        text-transform: uppercase;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        cursor: pointer;
+        z-index: 1000;
+        width: 100vw;
+        padding: 1rem;
+        box-sizing: border-box;
+        text-align: center;
+      }
+
+      .box img {
+        width: 100%;
+        height: 100%;
+      }
+
+      .box video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hide .box {
+        /* opacity: 0; */
+        transition-delay: 0.8s;
+      }
+
+      .hide .active {
+        opacity: 1;
+        transition-delay: 0s !important;
+      }
+
+      footer {
+        opacity: 0;
+      }
+      .hide footer {
+        opacity: 1;
+      }
+
+      .hide .wrapper {
+        grid: 25px;
+      }
+
+      .hidden .content {
+        display: none;
+      }
+
+      .show-info .button {
+        display: none;
+      }
+
+      .show-info .content {
+        display: block;
+        line-height: 170%;
+      }
+
+      .content {
+        font-size: 0.5rem;
+      }
+
+      .content span {
+        font-size: 1rem;
+        font-weight: 800;
+      }
+
+      .video-box {
+        background-color: transparent !important;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Thibault Jouvent</header>
+    <footer class="hidden">
+      <span class="button">Infos</span
+      ><span class="content"
+        >Sed ut perspiciatis <span>unde omnis</span> iste natus
+        <span>error sit voluptatem</span> accusantium doloremque laudantium,
+        <span>totam rem aperiam</span>, eaque ipsa quae ab illo
+        <span>inventore veritatis</span> et quasi architecto beatae
+        <span>vitae dicta</span> sunt explicabo.
+        <span>Nemo enim ipsam</span> voluptatem quia voluptas
+        <span>sit aspernatur aut</span> aspernatur aut fugit, sed quia
+        <span>consequuntur magni dolores</span> eos qui ratione sequi
+        nesciunt.</span
+      >
+    </footer>
+    <div class="centered-check"></div>
+    <!-- Outer wrapper for scaling -->
+    <div class="outerWrapper" id="outerWrapper">
+      <!-- Grid wrapper for holding the grid -->
+      <div class="wrapper" id="gridWrapper">
+        <!-- Generating the grid manually with unique data-index and image source -->
+        <div class="box" data-index="0">
+          <img src="./img/_1.jpg" />
+        </div>
+        <div class="box" data-index="1">
+          <img src="./img/_2.jpg" />
+        </div>
+        <div class="box" data-index="2">
+          <img src="./img/_3.jpg" />
+        </div>
+        <div class="box" data-index="3">
+          <img src="./img/_4.jpg" />
+        </div>
+        <div class="box" data-index="4">
+          <img src="./img/_5.jpg" />
+        </div>
+        <div class="box" data-index="5">
+          <img src="./img/_6.jpg" />
+        </div>
+        <div class="box" data-index="6">
+          <img src="./img/_7.jpg" />
+        </div>
+        <div class="box" data-index="7">
+          <img src="./img/_8.jpg" />
+        </div>
+        <div class="box" data-index="8">
+          <img src="./img/_9.jpg" />
+        </div>
+        <div class="box" data-index="9">
+          <img src="./img/_10.jpg" />
+        </div>
+        <div class="box" data-index="10">
+          <img src="./img/_11.jpg" />
+        </div>
+        <div class="box" data-index="11">
+          <img src="./img/_12.jpg" />
+        </div>
+        <div class="box" data-index="12">
+          <img src="./img/_13.jpg" />
+        </div>
+        <div class="box" data-index="13">
+          <img src="./img/_14.jpg" />
+        </div>
+        <div class="box" data-index="14">
+          <img src="./img/_15.jpg" />
+        </div>
+        <div class="box" data-index="15">
+          <img src="./img/_16.jpg" />
+        </div>
+        <div class="box" data-index="16">
+          <img src="./img/_17.jpg" />
+        </div>
+        <div class="box" data-index="17">
+          <img src="./img/_18.jpg" />
+        </div>
+        <div class="box" data-index="18">
+          <img src="./img/_19.jpg" />
+        </div>
+        <div class="box" data-index="19">
+          <img src="./img/_20.jpg" />
+        </div>
+        <div class="box" data-index="20">
+          <img src="./img/_21.jpg" />
+        </div>
+        <div class="box" data-index="21">
+          <img src="./img/_22.jpg" />
+        </div>
+        <div class="box" data-index="22">
+          <img src="./img/_23.jpg" />
+        </div>
+        <div class="box" data-index="23">
+          <img src="./img/_24.jpg" />
+        </div>
+        <div class="box" data-index="24">
+          <img src="./img/_25.jpg" />
+        </div>
+        <div class="box" data-index="25">
+          <img src="./img/_26.jpg" />
+        </div>
+        <div class="box" data-index="26">
+          <img src="./img/_27.jpg" />
+        </div>
+        <div class="box" data-index="27">
+          <img src="./img/_28.jpg" />
+        </div>
+        <div class="box" data-index="28">
+          <img src="./img/_29.jpg" />
+        </div>
+        <div class="box" data-index="29">
+          <img src="./img/_30.jpg" />
+        </div>
+        <div class="box video-box" data-index="30">
+          <video src="./img/02.mp4" autoplay muted playsinline></video>
+        </div>
+        <div class="box" data-index="31">
+          <img src="./img/_32.jpg" />
+        </div>
+        <div class="box" data-index="32">
+          <img src="./img/_33.jpg" />
+        </div>
+        <div class="box" data-index="33">
+          <img src="./img/_34.jpg" />
+        </div>
+        <div class="box" data-index="34">
+          <img src="./img/_35.jpg" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelector(".button").addEventListener("click", function () {
+        document.querySelector("footer").classList.add("show-info");
+      });
+
+      const outerWrapper = document.getElementById("outerWrapper");
+      const gridWrapper = document.getElementById("gridWrapper");
+      const gridSize = 7; // 7x7 grid (7 rows and 7 columns)
+      let currentScale = 1; // Track current scale
+      let isZoomedIn = false; // Track if zoom is applied
+      const boxes = document.querySelectorAll(".box"); // Get all boxes from the HTML
+      const header = document.querySelector("header"); // Select the header element
+      let currentIndex = -1; // Track the current active box index
+
+        header.addEventListener("mouseenter", function () {
+          if (!isZoomedIn) {
+          header.textContent = "About";
+          }
+        });
+
+        header.addEventListener("mouseleave", function () {
+          if (!isZoomedIn) {
+
+          header.textContent = "Thibault Jouvent";
+          }
+        });
+
+      // Add click events to each box
+      boxes.forEach((box, index) => {
+        box.addEventListener("click", () => {
+          if (isZoomedIn && box.classList.contains("video-box")) {
+            scaleToFitVideoBox(box); // If it's a video box and zoomed in, scale to fit the video
+          } else {
+            moveToCenter(box, index); // Otherwise, move to the center as usual
+          }
+        });
+      });
+
+      // Function to scale and fit the video box to 100% of the window if already zoomed
+      function scaleToFitVideoBox(videoBox) {
+        const video = videoBox.querySelector("video");
+
+        // Calculate the scale factor based on the size of the video box and viewport
+        const boxRect = videoBox.getBoundingClientRect();
+        const scaleX = window.innerWidth / boxRect.width;
+        const scaleY = window.innerHeight / boxRect.height;
+        const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
+        // Apply transformation to outerWrapper to fit the video box
+        outerWrapper.style.transition = "transform 0.5s ease-in-out";
+        outerWrapper.style.transform = ` scale(40)`;
+
+        // Ensure the video box becomes active and centered
+        boxes.forEach((box) => box.classList.remove("active"));
+        videoBox.classList.add("active");
+        document.body.classList.add("video-focus");
+
+        // Update the current scale
+        currentScale = scale;
+      }
+
+      // Function to move and zoom into the clicked box (unchanged)
+      function moveToCenter(clickedBox, index) {
+        document.body.classList.add("hide");
+        currentIndex = index; // Update the current index
+        const isActive = clickedBox.classList.contains("active");
+
+        // Update URL hash based on the clicked box
+        window.location.hash = `box-${index + 1}`;
+
+        // Remove active class from all boxes and set the clicked box as active
+        boxes.forEach((box) => box.classList.remove("active"));
+        clickedBox.classList.add("active");
+
+        // Calculate the position of the clicked box
+        const gridRect = gridWrapper.getBoundingClientRect(); // Get grid's dimensions
+        const boxRect = clickedBox.getBoundingClientRect(); // Get clicked box's dimensions
+        const boxWidth = boxRect.width;
+        const boxHeight = boxRect.height;
+
+        // Calculate the center of the clicked box relative to the gridWrapper
+        const boxCenterX = boxRect.left - gridRect.left + boxWidth / 2;
+        const boxCenterY = boxRect.top - gridRect.top + boxHeight / 2;
+
+        // Calculate the translation needed to center the clicked box in the viewport
+        let translateX = (gridRect.width / 2 - boxCenterX) / currentScale;
+        let translateY = (gridRect.height / 2 - boxCenterY) / currentScale;
+
+        // Apply translation to the gridWrapper to move the clicked box to the center
+        gridWrapper.style.transition = "transform 0.5s ease-in-out";
+        gridWrapper.style.transform = `translate(${translateX}px, ${translateY}px)`;
+
+        // If we are not zoomed in already, zoom into the clicked box
+        if (!isZoomedIn) {
+          setTimeout(() => {
+            // Calculate the scale factor based on the size of the clicked box
+            const scaleX = window.innerWidth / (2 * boxWidth);
+            const scaleY = window.innerHeight / (2 * boxHeight);
+            const scale = Math.min(scaleX, scaleY); // Maintain aspect ratio
+
+            // Apply scaling to the outerWrapper to zoom into the grid
+            outerWrapper.style.transition = "transform 0.5s ease-in-out";
+            outerWrapper.style.transform = `scale(${scale})`;
+
+            // Update the current scale and mark the zoom state
+            currentScale = scale;
+            isZoomedIn = true;
+          }, 500); // Delay matches the gridWrapper's transition time (0.5s)
+        }
+      }
+
+      // Function to reset the zoom (unchanged)
+      function resetZoom() {
+        document.body.classList.remove("video-focus");
+
+        if (isZoomedIn) {
+          document.body.classList.remove("hide");
+          outerWrapper.style.transform = `scale(1)`; // Reset the scale to 1
+          isZoomedIn = false; // Update zoom state
+          currentScale = 1; // Reset the current scale
+          // Remove the active class from all boxes
+          boxes.forEach((box) => box.classList.remove("active"));
+        }
+      }
+
+      // Handle header click to dezoom (unchanged)
+      header.addEventListener("click", resetZoom);
+
+      // Function to handle hash change and zoom to the appropriate box (unchanged)
+      function handleHashChange() {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith("#box-")) {
+          const boxIndex = parseInt(hash.replace("#box-", "")) - 1; // Extract the index from the hash
+          if (boxIndex >= 0 && boxIndex < boxes.length) {
+            const targetBox = boxes[boxIndex];
+            moveToCenter(targetBox, boxIndex); // Zoom to the box from the URL
+          }
+        }
+      }
+
+      // Function to handle left/right/up/down arrow key navigation (unchanged)
+      function handleKeyDown(event) {
+        if (isZoomedIn) {
+          if (event.key === "ArrowRight") {
+            // Move to the next box in the row, wrap to the next row if necessary
+            const nextIndex = (currentIndex + 1) % boxes.length;
+            moveToCenter(boxes[nextIndex], nextIndex);
+          } else if (event.key === "ArrowLeft") {
+            // Move to the previous box in the row, wrap to the previous row if necessary
+            const prevIndex = (currentIndex - 1 + boxes.length) % boxes.length;
+            moveToCenter(boxes[prevIndex], prevIndex);
+          } else if (event.key === "ArrowDown") {
+            // Move to the box directly below in the grid, wrap to the next row if necessary
+            const downIndex = (currentIndex + gridSize) % boxes.length;
+            moveToCenter(boxes[downIndex], downIndex);
+          } else if (event.key === "ArrowUp") {
+            // Move to the box directly above in the grid, wrap to the previous row if necessary
+            const upIndex =
+              (currentIndex - gridSize + boxes.length) % boxes.length;
+            moveToCenter(boxes[upIndex], upIndex);
+          }
+        }
+      }
+
+      // Listen for the page load and hash change events
+      window.addEventListener("load", handleHashChange); // Handle the hash when the page loads
+      window.addEventListener("hashchange", handleHashChange); // Handle the hash when it changes
+
+      // Listen for keydown events
+      window.addEventListener("keydown", handleKeyDown);
+    </script>
+  </body>
+</html>
